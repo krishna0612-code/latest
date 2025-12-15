@@ -25,6 +25,13 @@ urlpatterns = [
     # All API routes for signup, login, etc.
     path('api/', include('accounts.urls')),#login
     path('api/', include('home.urls')),#home
+    path("api/delivery/", include("delivery.urls")),
+    path('api/profile/', include('profiles.urls')),
+    path("api/vendor/", include("vendor.urls")),
+
+
+
+   
     
 
 ]

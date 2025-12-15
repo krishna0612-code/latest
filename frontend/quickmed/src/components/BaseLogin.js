@@ -1985,6 +1985,9 @@ const BaseLogin = ({
 
       localStorage.setItem("currentUser", JSON.stringify(data.user));
       localStorage.setItem("lastLoginType", userType);
+      if (userType === "vendor" && data.vendor_id) {
+        localStorage.setItem("vendor_id", data.vendor_id);
+      }
 
       setEmail("");
       setPassword("");

@@ -25,6 +25,54 @@ import random
 # --------------------------------------------------------
 # 🟡 EMAIL LOGIN (For all dashboards)
 # --------------------------------------------------------
+# @api_view(["POST"])
+# def email_login(request):
+#     email = request.data.get("email")
+#     password = request.data.get("password")
+#     userType = request.data.get("userType")
+
+#     user = None
+
+#     if userType == "user":
+#         user = PatientUser.objects.filter(email=email).first()
+#     elif userType == "doctor":
+#         user = DoctorUser.objects.filter(email=email).first()
+#     elif userType == "vendor":
+#         user = VendorUser.objects.filter(email=email).first()
+#     elif userType == "delivery":
+#         user = DeliveryUser.objects.filter(email=email).first()
+#     else:
+#         return Response({"message": "Invalid userType"}, status=400)
+
+#     if not user:
+#         return Response({"message": "Invalid login"}, status=400)
+
+#     if not check_password(password, user.password):
+#         return Response({"message": "Invalid credentials"}, status=400)
+
+#     return Response({
+#         "message": "Login successful",
+#         "user": {
+#             "fullName": user.fullName,
+#             "email": user.email,
+#             "phone": user.phone,
+#             "userType": userType
+#         }
+#     }, status=200)
+
+
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.contrib.auth.hashers import check_password
+
+from accounts.models import (
+    PatientUser,
+    DoctorUser,
+    VendorUser,
+    DeliveryUser,
+)
+
 @api_view(["POST"])
 def email_login(request):
     email = request.data.get("email")
@@ -32,15 +80,22 @@ def email_login(request):
     userType = request.data.get("userType")
 
     user = None
+    vendor_id = None  # ⭐ IMPORTANT
 
     if userType == "user":
         user = PatientUser.objects.filter(email=email).first()
+
     elif userType == "doctor":
         user = DoctorUser.objects.filter(email=email).first()
+
     elif userType == "vendor":
         user = VendorUser.objects.filter(email=email).first()
+        if user:
+            vendor_id = user.id  # ⭐ THIS FIXES EVERYTHING
+
     elif userType == "delivery":
         user = DeliveryUser.objects.filter(email=email).first()
+
     else:
         return Response({"message": "Invalid userType"}, status=400)
 
@@ -50,15 +105,21 @@ def email_login(request):
     if not check_password(password, user.password):
         return Response({"message": "Invalid credentials"}, status=400)
 
-    return Response({
-        "message": "Login successful",
-        "user": {
-            "fullName": user.fullName,
-            "email": user.email,
-            "phone": user.phone,
-            "userType": userType
-        }
-    }, status=200)
+    return Response(
+        {
+            "message": "Login successful",
+            "user": {
+                "fullName": user.fullName,
+                "email": user.email,
+                "phone": user.phone,
+                "userType": userType,
+            },
+            # ✅ SEND vendor_id ONLY FOR VENDOR
+            "vendor_id": vendor_id,
+        },
+        status=200,
+    )
+
 
 
 
