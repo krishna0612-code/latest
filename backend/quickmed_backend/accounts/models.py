@@ -66,6 +66,8 @@ class VendorUser(models.Model):
     gstNumber = models.CharField(max_length=30)
     storeAddress = models.TextField()
     businessLicense = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    is_approved = models.BooleanField(default=True)
 
     def set_password(self, raw_password):
         self.password = make_password(raw_password)

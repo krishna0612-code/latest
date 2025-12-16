@@ -231,3 +231,14 @@ def delivery_signup(request):
         }, status=201)
 
     return Response(serializer.errors, status=400)
+
+from .serializers import PublicVendorSerializer
+@api_view(["GET"])
+def public_vendors(request):
+    vendors = VendorUser.objects.filter(
+        is_active=True,
+        is_approved=True
+    ).order_by("-id")
+
+    serializer = PublicVendorSerializer(vendors, many=True)
+    return Response(serializer.data)

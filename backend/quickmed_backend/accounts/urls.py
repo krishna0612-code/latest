@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import signup, email_login, send_otp, verify_otp, delivery_signup
+from .views import signup, email_login, send_otp, verify_otp, delivery_signup,public_vendors
 
 urlpatterns = [
     path("signup/", signup, name="signup"),
@@ -13,4 +13,6 @@ urlpatterns = [
 
     # Verify OTP (POST)
     path("login/verifyotp/", verify_otp, name="verify_otp"),
+    path("public/vendors/", public_vendors),
+
 ]

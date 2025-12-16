@@ -135,3 +135,15 @@ class DeliverySignupSerializer(serializers.ModelSerializer):
         user.set_password(raw_password)
         user.save()
         return user
+
+
+
+class PublicVendorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VendorUser
+        fields = [
+            "id",
+            "storeName",
+            "storeAddress",
+            "businessType",
+        ]
