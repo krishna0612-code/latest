@@ -14,5 +14,6 @@ urlpatterns = [
     # Verify OTP (POST)
     path("login/verifyotp/", verify_otp, name="verify_otp"),
     path("public/vendors/", public_vendors),
+    
 
 ]

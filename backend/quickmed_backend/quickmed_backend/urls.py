@@ -27,7 +27,7 @@ urlpatterns = [
     path('api/', include('home.urls')),#home
     path("api/delivery/", include("delivery.urls")),
     path('api/profile/', include('profiles.urls')),
-    path("api/vendor/", include("vendor.urls")),
+    path("api/", include("vendor.urls")),
 
 
 

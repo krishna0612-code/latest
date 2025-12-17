@@ -146,4 +146,7 @@ class PublicVendorSerializer(serializers.ModelSerializer):
             "storeName",
             "storeAddress",
             "businessType",
+            "latitude",
+            "longitude",
+            
         ]

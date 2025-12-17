@@ -242,3 +242,4 @@ def public_vendors(request):
 
     serializer = PublicVendorSerializer(vendors, many=True)
     return Response(serializer.data)
+
